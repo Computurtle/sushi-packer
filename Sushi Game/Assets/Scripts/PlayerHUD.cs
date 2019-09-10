@@ -25,7 +25,8 @@ public class PlayerHUD : MonoBehaviour
 
     private float startHealth = 100;
     private float currentHealth;
-    private int deductions = 0;
+    private float modifier = 0;
+    private float timer = 0;
 
     // Set Health method
     public void SetHealth(float health)
@@ -47,7 +48,12 @@ public class PlayerHUD : MonoBehaviour
     // Penalty method
     public void PenaltyScore()
     {
-        deductions += penalty;
+        modifier -= penalty;
+    }
+
+    public void SushiScore(float score)
+    {
+        modifier += 10 - ((score / 4) * 10);
     }
 
     // Start is called before the first frame update
@@ -80,8 +86,14 @@ public class PlayerHUD : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Update Timer
+        if (spawner.GetComponent<SushiSpawning>().playing == true)
+        {
+            timer += Time.deltaTime;
+        }
+
         // Update score
-        float tempScore = ((((spawner.GetComponent<SushiSpawning>().difficulty * 8) - 4) * 10) - deductions) + bonuses;
+        float tempScore = timer + modifier;
         score.SetText("Your Score: " + tempScore.ToString("F2"));
 
         if (gameOver == false)

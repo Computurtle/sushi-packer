@@ -146,12 +146,12 @@ Light:
   serializedVersion: 8
   m_Type: 2
   m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
-  m_Intensity: 0.5
+  m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 2
+    m_Type: 0
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -5585,7 +5585,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gainRate: 10
   lossRate: 25
-  penalty: 2
+  penalty: 5
   healthBarLeft: {fileID: 293018246}
   healthBarRight: {fileID: 968608152}
   gameOver: 0
@@ -5873,7 +5873,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 866727197}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.1, y: -0.287, z: -1.199}
+  m_LocalPosition: {x: -2.3, y: -0.287, z: -1.199}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -6444,7 +6444,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1139645659}
   m_LocalRotation: {x: 0.28322524, y: -0.004315041, z: 0.028106958, w: 0.9586318}
-  m_LocalPosition: {x: -1.986, y: -3.553, z: -0.515}
+  m_LocalPosition: {x: -1.986, y: -3.553, z: -4.144}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 707462014}
@@ -6461,7 +6461,7 @@ Light:
   serializedVersion: 8
   m_Type: 0
   m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
-  m_Intensity: 0.5
+  m_Intensity: 2
   m_Range: 10
   m_SpotAngle: 127.80397
   m_CookieSize: 10
@@ -7097,6 +7097,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: d6ddc74bd8aebb44db9db968abbc3f43, type: 3}
       propertyPath: m_Name
       value: SushiRoom
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: d6ddc74bd8aebb44db9db968abbc3f43, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: d6ddc74bd8aebb44db9db968abbc3f43, type: 3}
       propertyPath: m_LocalPosition.x

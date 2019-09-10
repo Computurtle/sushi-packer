@@ -6,10 +6,12 @@ public class SushiDestroyer : MonoBehaviour
     public bool clickable = true;
 
     private SushiClicked tray;
+    private PlayerHUD hud;
 
     private void Start()
     {
         tray = FindObjectOfType<SushiClicked>();
+        hud = FindObjectOfType<PlayerHUD>();
     }
 
     void OnMouseDown()
@@ -20,6 +22,7 @@ public class SushiDestroyer : MonoBehaviour
             spawner.sushiList.Remove(gameObject);
             Destroy(this.gameObject);
             tray.ClickedSushi();
+            hud.SushiScore(transform.position.x + 2);
         }
     }
 }
