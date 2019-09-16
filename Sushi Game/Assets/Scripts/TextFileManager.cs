@@ -19,7 +19,7 @@ public class TextFileManager
 
     public string[] ReadFileContents(string fileName)
     {
-        string dirPath = Application.dataPath + "/Resources" + fileName + ".txt";
+        string dirPath = Application.dataPath + "/Resources/" + fileName + ".txt";
         string[] tContents = new string[0];
         if (File.Exists(dirPath) == true)
         {
@@ -29,24 +29,25 @@ public class TextFileManager
         return tContents;
     }
 
-    public void AddFileLine(string fileName, string fileContents)
-    {
-        ReadFileContents(fileName);
-        string dirPath = Application.dataPath + "/Resources" + fileName + ".txt";
-        string tContents = fileContents + "\n";
-        string timeStamp = "Time Stamp: " + System.DateTime.Now;
-        if (File.Exists(dirPath) == true)
-        {
-            File.AppendAllText(dirPath, timeStamp + " - " + tContents);
-        }
-    }
+    // Not currently in use //
+    // public void AddFileLine(string fileName, string fileContents)
+    // {
+    //     ReadFileContents(fileName);
+    //     string dirPath = Application.dataPath + "/Resources/" + fileName + ".txt";
+    //     string tContents = fileContents + "\n";
+    //     string timestamp = "Time Stamp: " + System.DateTime.Now;
+    //     if (File.Exists(dirPath) == true)
+    //     {
+    //         File.AppendAllText(dirPath, timestamp + " - " + tContents);
+    //     }
+    // }
 
-    public void AddKeyValuePair(string fileName, string key, string value)
+    public void AddKeyValuePair(string fileName, string key, string value, bool isTimestamped)
     {
         ReadFileContents(fileName);
-        string dirPath = Application.dataPath + "/Resources" + fileName + ".txt";
-        string tContents = key + "," + value;
-        string timeStamp = "Time Stamp: " + System.DateTime.Now;
+        string dirPath = Application.dataPath + "/Resources/" + fileName + ".txt";
+        string tContents = key + "," + value + "\n";
+        string timestamp = "Time Stamp: " + System.DateTime.Now;
         if (File.Exists(dirPath) == true)
         {
             bool contentsFound = false;
@@ -54,7 +55,14 @@ public class TextFileManager
             {
                 if (logContents[i].Contains(key) == true)
                 {
-                    logContents[i] = timeStamp + " - " + tContents;
+                    if (isTimestamped == true)
+                    {
+                        logContents[i] = timestamp + " - " + tContents;
+                    }
+                    else 
+                    {
+                        logContents[i] = tContents;
+                    }
                     contentsFound = true;
                 }
 
@@ -64,7 +72,14 @@ public class TextFileManager
                 }
                 else
                 {
-                    File.AppendAllText(dirPath, timeStamp + " - " + tContents);
+                    if (isTimestamped == true)
+                    {
+                        File.AppendAllText(dirPath, timestamp + " - " + tContents);
+                    }
+                    else 
+                    {
+                        File.AppendAllText(dirPath, tContents);
+                    }
                 }
             }
         }

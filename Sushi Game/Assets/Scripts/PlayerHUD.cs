@@ -21,6 +21,8 @@ public class PlayerHUD : MonoBehaviour
     public TextMeshProUGUI score; // Score text
     public TextMeshProUGUI endScore; // End score text
     public TextMeshProUGUI scoreTotal; // end score number
+    public TextMeshProUGUI highScore; // text that displays "highscore"
+    public TextMeshProUGUI highScoreText; // text that displays the actual highscore
     public List<GameObject> sushiList; // list of sushi currently spawned
     public Button start; // Start button
     public Button quit; // Quit button
@@ -32,6 +34,9 @@ public class PlayerHUD : MonoBehaviour
     public int bonuses = 0; // Keeps track of the bonus score
     public int penalty; // The amount of score to penalize
 
+    private TextFileReader reader; // Variable that holds the LogReader script
+    private float bestScore = 0; // Keeps track of the highest score when using txtFileManager
+    private float tempScore = 0; // Keeps track of the score during and at the end of the game
     private float startHealth = 100; // Health the satrt with
     private float currentHealth; // Keeps track of current health
     private float modifier = 0; // Keeps track of bonus + penalized score
@@ -41,6 +46,8 @@ public class PlayerHUD : MonoBehaviour
     void Start()
     {
         SetHealth(startHealth);
+        reader = GetComponent<TextFileReader>();
+        bestScore = reader.LoadFloatByKey("highScore");
         start.onClick.AddListener(StartClicked);
         howToplay.onClick.AddListener(HowToPlayClicked);
         back.onClick.AddListener(BackClicked);
@@ -58,7 +65,7 @@ public class PlayerHUD : MonoBehaviour
         }
 
         // Update score
-        float tempScore = timer + modifier;
+        tempScore = timer + modifier;
         score.SetText("Your Score: " + tempScore.ToString("F2"));
 
         // if game already isn't over yet
@@ -67,26 +74,7 @@ public class PlayerHUD : MonoBehaviour
             // If health goes below 1
             if (currentHealth < 1)
             {
-                // Set gameOver to true
-                gameOver = true;
-
-                // Stop Spawner
-                spawner.GetComponent<SushiSpawning>().playing = false;
-                spawner.GetComponent<SushiSpawning>().enabled = false;
-
-                // Make sushi not clickable
-                sushiList = spawner.GetComponent<SushiSpawning>().sushiList;
-                foreach (GameObject go in sushiList)
-                {
-                    go.GetComponent<SushiDestroyer>().clickable = false;
-                }
-
-                // Set UI texts
-                score.gameObject.SetActive(false);
-                gameOverText.gameObject.SetActive(true);
-                endScore.gameObject.SetActive(true);
-                retry.gameObject.SetActive(true);
-                scoreTotal.SetText(tempScore.ToString("F2"));
+                EndGame();
             }
             // Slowly gain health
             else if (currentHealth < 100)
@@ -170,6 +158,49 @@ public class PlayerHUD : MonoBehaviour
     {
         Application.Quit();
         Debug.Log("GAME QUIT!");
+    }
+
+    /// <summary>
+    /// Triggered when health is < 0
+    /// </summary>
+    void EndGame()
+    {
+        // Set gameOver to true
+        gameOver = true;
+
+        // Stop Spawner
+        spawner.GetComponent<SushiSpawning>().playing = false;
+        spawner.GetComponent<SushiSpawning>().enabled = false;
+
+        // Make all sushi in sushiList not clickable
+        sushiList = spawner.GetComponent<SushiSpawning>().sushiList;
+        foreach (GameObject go in sushiList)
+        {
+            go.GetComponent<SushiDestroyer>().clickable = false;
+        }
+
+        // Saves the highscore if beaten
+        if (tempScore > bestScore)
+        {
+            reader.SaveKeyValuePair("highScore", tempScore.ToString("F2"), false);
+            highScore.SetText("NEW Highscore");
+        }
+        else if (bestScore == 0)
+        {
+            reader.SaveKeyValuePair("highScore", tempScore.ToString("F2"), false);
+        }
+
+        // Set score texts text
+        highScoreText.SetText(reader.LoadStringByKey("highScore"));
+        scoreTotal.SetText(tempScore.ToString("F2"));
+
+        // Set UI texts
+        score.gameObject.SetActive(false);
+        gameOverText.gameObject.SetActive(true);
+        endScore.gameObject.SetActive(true);
+        highScore.gameObject.SetActive(true);
+        highScoreText.gameObject.SetActive(true);
+        retry.gameObject.SetActive(true);
     }
 
     /// <summary>

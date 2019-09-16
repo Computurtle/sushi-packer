@@ -12,9 +12,9 @@ public class TextFileReader : MonoBehaviour
         txtFileManager.Start();
     }
 
-    public void SaveKeyValuePair(string key, string value)
+    public void SaveKeyValuePair(string key, string value, bool isTimestamped)
     {
-        txtFileManager.AddKeyValuePair(txtFileManager.logName, key, value);
+        txtFileManager.AddKeyValuePair(txtFileManager.logName, key, value, isTimestamped);
     }
 
     public string LoadStringByKey(string key)

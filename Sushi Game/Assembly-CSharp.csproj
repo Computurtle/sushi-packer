@@ -62,6 +62,7 @@
      <Compile Include="Assets\Scripts\TextFileManager.cs" />
      <Compile Include="Assets\Scripts\TextFileReader.cs" />
      <Compile Include="Assets\Scripts\TrayClicked.cs" />
+     <None Include="Assets\Resources\Highscores.txt" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
      <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro_Properties.cginc" />
