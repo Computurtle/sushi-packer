@@ -41,10 +41,15 @@ public class PlayerHUD : MonoBehaviour
     private float currentHealth; // Keeps track of current health
     private float modifier = 0; // Keeps track of bonus + penalized score
     private float timer = 0; // Keeps track of the round timer    
+    private Camera cam; // Variable for main camera
 
-    // Set health and add listener for menu buttons
     void Start()
     {
+        // Start music a little bit slower
+        cam = Camera.main;
+        cam.GetComponent<AudioSource>().pitch = 0.8f;
+
+        // Set health and add listener for menu buttons
         SetHealth(startHealth);
         reader = GetComponent<TextFileReader>();
         bestScore = reader.LoadFloatByKey("highScore");
@@ -62,6 +67,7 @@ public class PlayerHUD : MonoBehaviour
         if (spawner.GetComponent<SushiSpawning>().playing == true)
         {
             timer += Time.deltaTime;
+            cam.GetComponent<AudioSource>().pitch *= 1.0001f;
         }
 
         // Update score
