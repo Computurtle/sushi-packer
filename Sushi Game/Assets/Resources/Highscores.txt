@@ -1,3 +1,5 @@
 Highscores
-highScore,226.62
+highScore,954.94
+
+
 
